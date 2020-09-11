@@ -1,23 +1,169 @@
-# Compiled class file
-*.class
+This program uses java language to display the wage and salaries  of a payed clown
+public class circusclown {
+    
+    private String clown;
+    private int hours;
+    private int years;
+    money sal;
+    
+    public circusclown(String c, money s, int h, int y) {
+        clown = c;
+        sal = s;
+        hours = h;
+        years = y;
+    }
+    
+    public circusclown() {
+        
+        clown = " ";
+        sal = new money();
+        hours = 0;
+        years = 0;
+    }
+    
+    
+    public int getYears() {
+        
+        return years;
+    }
+    
+    public int getHours() {
+        
+        return hours;
+    }
+    
+    public String getClown() {
+        
+        return this.clown;
+    }
+    
+    public money getSal( ) {
+        
+        return this.sal;
+    }
+    
+    public money calcBaseWeekPay() {
+        
+        return sal.multiplyMoney(hours);
+        
+    }
+    
+    public money calcBonusAmount() {
+        
+        if(years <= 14)
+            return calcBaseWeekPay().addMoney(new money("$200.00"));
+        else if (years >= 15 && years <= 29)
+            return calcBaseWeekPay().addMoney(new money("300.00"));
+        else
+            return calcBaseWeekPay().addMoney(new money("500.00"));
+        
+        
+        
+    }
 
-# Log file
-*.log
+    public money calcTotalPay()
+    {
+        return calcBaseWeekPay().addMoney(calcBonusAmount());
+    }
+    
+    public String toString()
+    {
+        return "the Clown's name is " + clown + "\n" + "Bonus amount is: " +  calcBonusAmount() + "\n" + "Total weekly pay is: " + calcTotalPay() + "\n" ;
+    }
 
-# BlueJ files
-*.ctxt
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+}
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+
+
+
+
+
+/**
+ * 
+ */
+package clown;
+
+import javax.swing.JOptionPane;
+
+import hw7.money;
+
+/**
+ * @author Jordan Louis 
+ *
+ */
+public class testingclown {
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        
+        circusclown[] c1 = new circusclown[3];
+        
+        for( int i = 0; i < c1.length; i++ ) {
+        
+        String name = JOptionPane.showInputDialog( "clown name ");
+        
+        String hourly = JOptionPane.showInputDialog( " Hourly pay is");
+        
+        String work = JOptionPane.showInputDialog("Hours worked is" );
+
+        String yearsworked = JOptionPane.showInputDialog(" years worked is" );
+
+        int num1 = Integer.parseInt(work);
+        int num2 = Integer.parseInt(yearsworked);
+        
+        
+        
+        // create the object AND put it in the array
+        c1[ i ] = new circusclown( name, new money(hourly ), num1, num2 ); 
+        
+        } 
+        
+        
+        
+        for( int i = 0; i < c1.length; i++ ) {
+             
+            System.out.println( c1[ i ] );
+             
+            }
+        
+        // which clown has the most experience
+        circusclown maxyears = c1[ 0 ];
+        for( int i = 1; i < c1.length; i++  ) {
+         
+        if( c1[ i ].getYears() >  maxyears.getYears() ) {
+         
+                maxyears = c1[ i ];
+        }
+         
+        } // ends for loop
+         
+        System.out.println( " the clown named " + maxyears.getClown() + " has worked the greatest number of years " );
+        
+        // which clown has the most bonus
+        circusclown maxbonus = c1[ 0 ];
+        for( int i = 1; i < c1.length; i++  ) {
+         
+        if( c1[ i ].calcBonusAmount().compareMoney(maxbonus.calcBonusAmount())== 1   ) {
+         
+                maxbonus = c1[ i ];
+        }
+         
+        } // ends for loop
+         
+        System.out.println( " the clown named " + maxbonus.getClown() + " has the greatest bonus of the week " );
+    
+    
+    
+    }
+}
+}
+
+    }
+
+}
+`
+
